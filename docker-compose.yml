@@ -1,0 +1,115 @@
+# Orchestrates all 3 industrial simulators + Caddy reverse proxy.
+# Build from GitHub source with: docker compose up --build
+# Uses pre-built images (set by CI) if GENERATOR_IMAGE / BESS_IMAGE / PV_IMAGE
+# env vars are defined; otherwise falls back to building from source.
+
+services:
+  generator:
+    build:
+      context: https://github.com/tomhammond17/generator-fleet-simulator.git
+    image: ${GENERATOR_IMAGE:-generator-fleet-simulator:local}
+    environment:
+      GENSIM_WEB_HOST: "0.0.0.0"
+      GENSIM_WEB_PORT: "5000"
+      GENSIM_MODBUS_HOST: "0.0.0.0"
+      GENSIM_MODBUS_PORT: "5020"
+      GENSIM_STATE_FILE: /data/generator_state.json
+    ports:
+      - "5001:5000"
+      - "5021:5020"
+    volumes:
+      - generator_data:/data
+    networks:
+      - simnet
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c",
+             "import os,urllib.request; urllib.request.urlopen('http://localhost:'+os.environ.get('GENSIM_WEB_PORT','5000')+'/api/state')"]
+      interval: 30s
+      timeout: 10s
+      start_period: 20s
+      retries: 3
+
+  bess:
+    build:
+      context: https://github.com/tomhammond17/BESS-Simulator.git
+    image: ${BESS_IMAGE:-bess-simulator:local}
+    environment:
+      BESSSIM_WEB_HOST: "0.0.0.0"
+      BESSSIM_WEB_PORT: "5000"
+      BESSSIM_MODBUS_HOST: "0.0.0.0"
+      BESSSIM_MODBUS_PORT: "5020"
+      BESSSIM_STATE_FILE: /data/bess_state.json
+    ports:
+      - "5002:5000"
+      - "5022:5020"
+    volumes:
+      - bess_data:/data
+    networks:
+      - simnet
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c",
+             "import os,urllib.request; urllib.request.urlopen('http://localhost:'+os.environ.get('BESSSIM_WEB_PORT','5000')+'/api/health')"]
+      interval: 30s
+      timeout: 10s
+      start_period: 20s
+      retries: 3
+
+  pv:
+    build:
+      context: https://github.com/tomhammond17/PV-Simulator.git
+    image: ${PV_IMAGE:-pv-simulator:local}
+    environment:
+      PVSIM_WEB_HOST: "0.0.0.0"
+      PVSIM_WEB_PORT: "5000"
+      PVSIM_MODBUS_HOST: "0.0.0.0"
+      PVSIM_MODBUS_PORT: "5020"
+      PVSIM_STATE_FILE: /data/pv_state.json
+    ports:
+      - "5003:5000"
+      - "5023:5020"
+    volumes:
+      - pv_data:/data
+    networks:
+      - simnet
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c",
+             "import os,urllib.request; urllib.request.urlopen('http://localhost:'+os.environ.get('PVSIM_WEB_PORT','5000')+'/api/health')"]
+      interval: 30s
+      timeout: 10s
+      start_period: 20s
+      retries: 3
+
+  caddy:
+    image: caddy:2-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      - simnet
+    restart: unless-stopped
+    depends_on:
+      generator:
+        condition: service_healthy
+      bess:
+        condition: service_healthy
+      pv:
+        condition: service_healthy
+
+volumes:
+  generator_data:
+  bess_data:
+  pv_data:
+  caddy_data:
+  caddy_config:
+
+networks:
+  simnet:
+    driver: bridge
