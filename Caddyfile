@@ -1,0 +1,19 @@
+# Caddy reverse proxy for the 3 industrial simulator dashboards.
+# Uses Docker Compose service names (generator, bess, pv) as upstream targets.
+# Auto-TLS via Let's Encrypt when deployed with real domains.
+# For local dev without DNS, replace domain blocks with:
+#   localhost:8001 { reverse_proxy generator:5000 }
+#   localhost:8002 { reverse_proxy bess:5000 }
+#   localhost:8003 { reverse_proxy pv:5000 }
+
+gen-demo.studioseventeen.io {
+    reverse_proxy generator:5000
+}
+
+bess-demo.studioseventeen.io {
+    reverse_proxy bess:5000
+}
+
+pv-demo.studioseventeen.io {
+    reverse_proxy pv:5000
+}
