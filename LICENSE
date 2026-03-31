@@ -1,0 +1,88 @@
+STUDIO SEVENTEEN — PROPRIETARY SOFTWARE LICENSE AGREEMENT
+
+Copyright (c) 2026 Studio Seventeen. All rights reserved.
+
+IMPORTANT: READ THIS LICENSE AGREEMENT CAREFULLY BEFORE USING THIS SOFTWARE.
+
+By downloading, installing, copying, or otherwise using this software, you agree
+to be bound by the terms of this License Agreement. If you do not agree, do not
+use this software.
+
+-------------------------------------------------------------------------------
+
+1. GRANT OF LICENSE
+
+Studio Seventeen grants you a limited, non-exclusive, non-transferable,
+revocable license to use this software solely for your own internal business
+purposes, subject to the terms and conditions of this Agreement.
+
+2. RESTRICTIONS
+
+You may NOT:
+
+  a. Copy, reproduce, or distribute this software or any portion thereof to
+     any third party, in any form or by any means.
+
+  b. Modify, translate, adapt, or create derivative works based on this
+     software or any portion thereof.
+
+  c. Reverse engineer, disassemble, decompile, or otherwise attempt to derive
+     the source code, algorithms, or structure of this software.
+
+  d. Sublicense, sell, rent, lease, transfer, or otherwise make this software
+     available to any third party.
+
+  e. Remove, obscure, or alter any proprietary notices, labels, or marks on
+     this software.
+
+  f. Use this software to build a competing product or service.
+
+3. LICENSE ACCEPTANCE GATE
+
+This software requires explicit acceptance of this license at startup by setting
+the environment variable:
+
+    ACCEPT_LICENSE=yes
+
+Failure to set this variable will prevent the software from starting. By setting
+ACCEPT_LICENSE=yes, you confirm that you have read, understood, and agree to be
+bound by the terms of this License Agreement.
+
+4. OWNERSHIP
+
+This software is proprietary to Studio Seventeen and is protected by copyright
+law and international treaty provisions. Studio Seventeen retains all
+intellectual property rights in and to the software.
+
+5. NO WARRANTY
+
+THIS SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT.
+
+6. LIMITATION OF LIABILITY
+
+IN NO EVENT SHALL STUDIO SEVENTEEN BE LIABLE FOR ANY INDIRECT, INCIDENTAL,
+SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES ARISING OUT OF OR IN CONNECTION
+WITH YOUR USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+DAMAGES.
+
+7. TERMINATION
+
+This license is effective until terminated. Your rights under this Agreement
+will terminate automatically and without notice if you fail to comply with any
+of its terms.
+
+8. GOVERNING LAW
+
+This Agreement shall be governed by and construed in accordance with the laws
+of the jurisdiction in which Studio Seventeen is incorporated, without regard
+to its conflict of law provisions.
+
+9. ENTIRE AGREEMENT
+
+This Agreement constitutes the entire agreement between you and Studio Seventeen
+with respect to the software and supersedes all prior or contemporaneous
+understandings, communications, and agreements.
+
+For licensing inquiries, contact: legal@studioseventeen.io
